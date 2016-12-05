@@ -15,6 +15,9 @@ End of year 2 F[1] = F[0] * (1 + 0.01 * growthRate) + salary * save * 0.01
 End of year 3 F[2] = F[1] * (1 + 0.01 * growthRate) + salary * save * 0.01
 """
 
+#
+# Problem 1
+#
 def nestEggFixed(salary, save, growthRate, years):
     """
     - salary: the amount of money you make each year.
@@ -26,7 +29,7 @@ def nestEggFixed(salary, save, growthRate, years):
     - return: a list whose values are the size of your retirement account at
       the end of each year.
     """
-    savings = []
+    savings = [] # List to save results
     savings.append(salary * save * 0.01)
     while len(savings) < years:
         for i in range(1, years):
@@ -44,3 +47,36 @@ def testNestEggFixed():
 
     savingsRecord3 = nestEggFixed(10000, 5, 5, 1)
     print savingsRecord3
+
+#
+# Problem 2
+#
+
+def nestEggVariable(salary, save, growthRates):
+    """
+    - salary: the amount of money you make each year.
+    - save: the percent of your salary to save in the investment account each
+        year (an integer between 0 and 100).
+    - growthRate: a list of the annual percent increases in your investment
+        account (integers between 0 and 100).
+    - return: a list of your retirement account value at the end of each year.
+    """
+
+    savings = [] # List to save results
+    savings.append(salary * save * 0.01)
+    while len(savings) < len(growthRates):
+        for i in range(1, len(growthRates)):
+            savings.append(savings[i - 1] * (1 + 0.01 * growthRates[i]) + salary * save * 0.01)
+    return savings
+
+def testNestEggVariable():
+    salary = 10000
+    save = 10
+    growthRates = [3, 4, 5, 0, 3]
+    savingsRecord = nestEggVariable(salary, save, growthRates)
+    print savingsRecord
+    # Output should have values close to:
+    # [1000.0, 2040.0, 3142.0, 4142.0, 5266.2600000000002]
+
+    savingsRecord2 = nestEggVariable(15000, 10, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+    print savingsRecord2
