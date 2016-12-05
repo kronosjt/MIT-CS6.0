@@ -34,7 +34,7 @@ def nestEggFixed(salary, save, growthRate, years):
     return savings
 
 def testNestEggFixed():
-    salary     = 10000
+    salary     = 10000.0
     save       = 10
     growthRate = 15
     years      = 5
