@@ -32,7 +32,7 @@ def nestEggFixed(salary, save, growthRate, years):
       the end of each year.
     """
     savings = []  # List to save results
-    savings.append(salary * save * 0.01)
+    savings.append(salary * save * 0.01) # Add F[0]
     while len(savings) < years:
         for i in range(1, years):
             savings.append(savings[i-1] * (1 + 0.01 * growthRate) + salary * save * 0.01)
@@ -72,7 +72,7 @@ def nestEggVariable(salary, save, growthRates):
     """
 
     savings = []  # List to save results
-    savings.append(salary * save * 0.01)
+    savings.append(salary * save * 0.01) # Add F[0]
     while len(savings) < len(growthRates):
         for i in range(1, len(growthRates)):
             savings.append(savings[i - 1] * (1 + 0.01 * growthRates[i]) + salary * save * 0.01)
@@ -112,7 +112,7 @@ def postRetirement(savings, growthRates, expenses):
     End of year 3 F[2] = F[1] * (1 + 0.01 * growthRates[2]) – expenses
     """
     funds = []  # list for storing the value of funds
-    funds.append(savings * (1 + 0.01 * growthRates[0]) - expenses)
+    funds.append(savings * (1 + 0.01 * growthRates[0]) - expenses) # Add F[0]
     while (len(funds) < len(growthRates)):
         for i in range(1, len(growthRates)):
             funds.append(funds[i-1] * (1 + 0.01 * growthRates[i]) - expenses)
