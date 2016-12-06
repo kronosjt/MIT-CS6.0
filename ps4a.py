@@ -20,6 +20,8 @@ End of year 3 F[2] = F[1] * (1 + 0.01 * growthRate) + salary * save * 0.01
 #
 # Problem 1
 #
+
+
 def nestEggFixed(salary, save, growthRate, years):
     """
     - salary: the amount of money you make each year.
@@ -38,6 +40,7 @@ def nestEggFixed(salary, save, growthRate, years):
             savings.append(savings[i-1] * (1 + 0.01 * growthRate) + salary * save * 0.01)
     return savings
 
+
 def testNestEggFixed():
     savingsRecord = nestEggFixed(10000.0, 10, 15, 5)
     print savingsRecord
@@ -53,6 +56,7 @@ def testNestEggFixed():
 #
 # Problem 2
 #
+
 
 def nestEggVariable(salary, save, growthRates):
     """
@@ -78,6 +82,7 @@ def nestEggVariable(salary, save, growthRates):
             savings.append(savings[i - 1] * (1 + 0.01 * growthRates[i]) + salary * save * 0.01)
     return savings
 
+
 def testNestEggVariable():
     salary = 10000
     save = 10
@@ -93,6 +98,7 @@ def testNestEggVariable():
 #
 # Problem 3
 #
+
 
 def postRetirement(savings, growthRates, expenses):
     """
@@ -113,10 +119,11 @@ def postRetirement(savings, growthRates, expenses):
     """
     funds = []  # list for storing the value of funds
     funds.append(savings * (1 + 0.01 * growthRates[0]) - expenses) # Add F[0]
-    while (len(funds) < len(growthRates)):
+    while len(funds) < len(growthRates):
         for i in range(1, len(growthRates)):
             funds.append(funds[i-1] * (1 + 0.01 * growthRates[i]) - expenses)
     return funds
+
 
 def testPostRetirement():
     savings     = 100000
