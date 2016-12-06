@@ -8,8 +8,10 @@ list, whose values are the size of your retirement account at the end of each ye
 most recent year's value at the end of the list.
 Complete the implementation of:
 def nestEggFixed (salary, save, growthRate, years):
+"""
 
-Retirement fund
+"""
+Formulae for calculation:
 End of year 1 F[0] = salary * save * 0.01
 End of year 2 F[1] = F[0] * (1 + 0.01 * growthRate) + salary * save * 0.01
 End of year 3 F[2] = F[1] * (1 + 0.01 * growthRate) + salary * save * 0.01
@@ -29,7 +31,7 @@ def nestEggFixed(salary, save, growthRate, years):
     - return: a list whose values are the size of your retirement account at
       the end of each year.
     """
-    savings = [] # List to save results
+    savings = []  # List to save results
     savings.append(salary * save * 0.01)
     while len(savings) < years:
         for i in range(1, years):
@@ -62,7 +64,14 @@ def nestEggVariable(salary, save, growthRates):
     - return: a list of your retirement account value at the end of each year.
     """
 
-    savings = [] # List to save results
+    """
+    Formulae for calculation:
+    End of year 1 F[0] = salary * save * 0.01
+    End of year 2 F[1] = F[0] * (1 + 0.01 * growthRate) + salary * save * 0.01
+    End of year 3 F[2] = F[1] * (1 + 0.01 * growthRate) + salary * save * 0.01
+    """
+
+    savings = []  # List to save results
     savings.append(salary * save * 0.01)
     while len(savings) < len(growthRates):
         for i in range(1, len(growthRates)):
@@ -79,4 +88,45 @@ def testNestEggVariable():
     # [1000.0, 2040.0, 3142.0, 4142.0, 5266.2600000000002]
 
     savingsRecord2 = nestEggVariable(15000, 10, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
+    print savingsRecord2
+
+#
+# Problem 3
+#
+
+def postRetirement(savings, growthRates, expenses):
+    """
+    - savings: the initial amount of money in your savings account.
+    - growthRate: a list of the annual percent increases in your investment
+      account (an integer between 0 and 100).
+    - expenses: the amount of money you plan to spend each year during
+      retirement.
+    - return: a list of your retirement account value at the end of each year.
+    """
+
+    """
+    Formulae for calculation
+    Retirement fund
+    End of year 1 F[0] = savings * (1 + 0.01 * growthRates[0]) – expenses
+    End of year 2 F[1] = F[0] * (1 + 0.01 * growthRates[1]) – expenses
+    End of year 3 F[2] = F[1] * (1 + 0.01 * growthRates[2]) – expenses
+    """
+    funds = []  # list for storing the value of funds
+    funds.append(savings * (1 + 0.01 * growthRates[0]) - expenses)
+    while (len(funds) < len(growthRates)):
+        for i in range(1, len(growthRates)):
+            funds.append(funds[i-1] * (1 + 0.01 * growthRates[i]) - expenses)
+    return funds
+
+def testPostRetirement():
+    savings     = 100000
+    growthRates = [10, 5, 0, 5, 1]
+    expenses    = 30000
+    savingsRecord = postRetirement(savings, growthRates, expenses)
+    print savingsRecord
+    # Output should have values close to:
+    # [80000.000000000015, 54000.000000000015, 24000.000000000015,
+    # -4799.9999999999854, -34847.999999999985]
+
+    savingsRecord2 = postRetirement(200000, [5, 5, 5, 5, 10, 12, 11], 50000)
     print savingsRecord2
