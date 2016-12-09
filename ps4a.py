@@ -158,6 +158,41 @@ def findMaxExpenses(salary, save, preRetireGrowthRates, postRetireGrowthRates,
       the investment fund at the end of retirement.
     """
 
+    """
+    Psuedocode:
+    1. expenseEstimate = should be between 0 and the savings at the end of your working period + epsilon.
+       Savings would be the last element of the list from nestEggVariable (#4)
+    2. Number of years you plan to work = len(preRetireGrowthRates)
+    3. Number of years to use savings   = len(postRetireGrowthRates)
+    4. Savings at the end of working period->savingsStart = nestEggVariable(salary, save, preRetireGrowthRates)
+    5. Last element of list from #4 savingsStart[-1] is the input for postRetirement()
+    6. Input for postRetirement() = savingsStart, postRetireGrowthRates, expenseEstimate
+    7. The last element of the list returned from postRetirement() should be <= epsilon
+    8. If not, then calculate new expenseEstimate between previous value & savingsStart[-1] and repeat
+    """
+
+    savingsStart = nestEggVariable(salary, save, preRetireGrowthRates)  # List that holds the savings for working period
+                                                                        # Use last element of this to estimate #1
+    print "----------------------------------------------------------"
+    print "Savings at the beginning of retirement: ", savingsStart[-1]
+    low = 0
+    high = savingsStart[-1] + epsilon
+    expenseEstimate = (low + high)/2  # Start with an average value as estimate
+    print 'Expense Estimate = ', expenseEstimate
+    savingsRecord = postRetirement(savingsStart[-1], postRetireGrowthRates, expenseEstimate)
+    while savingsRecord[-1] > epsilon or savingsRecord[-1] < 0: # if we get negative savings we still need new estimate
+        if savingsRecord[-1] < epsilon:
+            high = expenseEstimate
+        else:
+            low = expenseEstimate
+        savingsRecord = list([])  # Reset savingsRecord to empty list as previous estimate was wrong
+        expenseEstimate = (low + high)/2
+        print 'Expense Estimate = ', expenseEstimate
+        savingsRecord = postRetirement(savingsStart[-1], postRetireGrowthRates, expenseEstimate)
+    print "Savings at the end of retirement period: %f, Epsilon = %f" % (savingsRecord[-1], epsilon)
+    return expenseEstimate
+
+
 
 def testFindMaxExpenses():
     salary                = 10000
@@ -167,8 +202,14 @@ def testFindMaxExpenses():
     epsilon               = .01
     expenses = findMaxExpenses(salary, save, preRetireGrowthRates,
                                postRetireGrowthRates, epsilon)
-    print expenses
+    print "Expenses = ", expenses
     # Output should have a value close to:
     # 1229.95548986
 
-    # TODO: Add more test cases here.
+    expenses2 = findMaxExpenses(10000, 10, [3, 4, 5, 0, 3],
+                                [10, 5, 0, 5, 1], 0.1)
+    print "Expenses2 = ", expenses2
+
+    expenses3 = findMaxExpenses(10000, 10, [3, 4, 5, 0, 3],
+                                [10, 5, 0, 5, 1], 1)
+    print "Expenses3 = ", expenses3
