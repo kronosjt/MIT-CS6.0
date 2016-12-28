@@ -92,7 +92,7 @@ def get_word_score(word, n):
         score += 50 # Bonus 50 for using all letters in the hand
 
     return score
-    #test comment
+
 #
 # Make sure you understand how this function works and what it does!
 #
