@@ -76,7 +76,7 @@ def get_word_score(word, n):
     word: string (lowercase letters)
     returns: int >= 0
     """
-    # PSUEDOCODE:
+    # PSEUDOCODE:
     # 1. initialize score to 0
     # 2. if word is empty then score=0
     # 3. else: for each letter in word, use letter as key & extract value from  SCRABBLE_LETTER_VALUES
@@ -160,7 +160,13 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ...
+    # PSEUDOCODE
+    # 1. for each letter in word decrement the letter.value in hand
+
+    for letter in word:
+        hand[letter] = hand.get(letter) - 1
+    return hand
+
 
 #
 # Problem #3: Test word validity
