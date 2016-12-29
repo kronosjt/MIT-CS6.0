@@ -126,6 +126,8 @@ def test_is_valid_word(word_list):
     """
     failure=False
     # test 1
+    print "-"*10
+    print "Test 1"
     word = "hello"
     hand = get_frequency_dict(word)
 
@@ -136,6 +138,8 @@ def test_is_valid_word(word_list):
         failure = True
 
     # test 2
+    print "-" * 10
+    print "Test 2"
     hand = {'r': 1, 'a': 3, 'p': 2, 'e': 1, 't': 1, 'u':1}
     word = "rapture"
 
@@ -146,6 +150,8 @@ def test_is_valid_word(word_list):
         failure = True        
 
     # test 3
+    print "-" * 10
+    print "Test 3"
     hand = {'n': 1, 'h': 1, 'o': 1, 'y': 1, 'd':1, 'w':1, 'e': 2}
     word = "honey"
 
@@ -156,6 +162,8 @@ def test_is_valid_word(word_list):
         failure = True                        
 
     # test 4
+    print "-" * 10
+    print "Test 4"
     hand = {'r': 1, 'a': 3, 'p': 2, 't': 1, 'u':2}
     word = "honey"
 
@@ -166,6 +174,8 @@ def test_is_valid_word(word_list):
         failure = True
 
     # test 5
+    print "-" * 10
+    print "Test 5"
     hand = {'e':1, 'v':2, 'n':1, 'i':1, 'l':2}
     word = "evil"
     
@@ -176,6 +186,8 @@ def test_is_valid_word(word_list):
         failure = True
         
     # test 6
+    print "-" * 10
+    print "Test 6"
     word = "even"
 
     if  is_valid_word(word, hand, word_list):

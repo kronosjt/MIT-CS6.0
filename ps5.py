@@ -181,7 +181,29 @@ def is_valid_word(word, hand, word_list):
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     """
-    # TO DO ...
+    # PSEUDOCODE
+    # 1. Check if word exists in word_list, else return False
+    # 2. For each letter in word check if it exists in hand, else return False
+    # 3. If it exists check if the value is != 0 and matches the number of times the letter is used, else return False
+    # 4. Account for same letter being used multiple times!! Use get_frequency_dict() to convert word into a dict
+
+    word_in_hand = True
+    word_in_wordlist = False
+
+    for entry in word_list:  # For each string in word_list
+        if word == entry:  # Check if word matches it
+            word_in_wordlist = True
+
+    word_2_dict = get_frequency_dict(word) # Convert word into a dict for ease
+
+    for letter in word_2_dict.keys():  # For each letter in word
+        if not word_2_dict.get(letter) <= hand.get(letter):  # Compare value of a key in word to hand
+            word_in_hand = False  # This will execute if value in word is greater than hand
+
+    if word_in_hand == True and word_in_wordlist == True:
+        return True
+    else:
+        return False
 
 #
 # Problem #4: Playing a hand
