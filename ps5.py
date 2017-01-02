@@ -200,10 +200,7 @@ def is_valid_word(word, hand, word_list):
         if not word_2_dict.get(letter) <= hand.get(letter):  # Compare value of a key in word to hand
             word_in_hand = False  # This will execute if value in word is greater than hand
 
-    if word_in_hand == True and word_in_wordlist == True:
-        return True
-    else:
-        return False
+    return word_in_hand == True and word_in_wordlist == True
 
 #
 # Problem #4: Playing a hand
