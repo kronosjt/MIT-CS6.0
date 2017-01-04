@@ -198,9 +198,9 @@ def is_valid_word(word, hand, word_list):
 
     for letter in word_2_dict.keys():  # For each letter in word
         if not word_2_dict.get(letter) <= hand.get(letter):  # Compare value of a key in word to hand
-            word_in_hand = False  # This will execute if value in word is greater than hand
+            word_in_hand = False  # This will execute if the count for a letter in word is greater than that in hand
 
-    return word_in_hand == True and word_in_wordlist == True
+    return word_in_hand and word_in_wordlist
 
 #
 # Problem #4: Playing a hand
@@ -233,8 +233,61 @@ def play_hand(hand, word_list):
       hand: dictionary (string -> int)
       word_list: list of lowercase strings
     """
-    # TO DO ...
-    print "play_hand not implemented." # replace this with your code...
+
+    # PSEUDOCODE
+    # 0. Call load_words() to load the dictionary.
+    # 1. Check if hand has ended - hand is empty or '.' was entered. If yes->print total score.
+    # 2. Call display_hand() and ask user to input a word
+    # 3. Call is_valid_word() to check if it is a legitimate play and word
+    # 4. If invalid word then ask user to enter a word again
+    # 5. If valid word, call update_hand()
+    # 6. Call get_word_score() to calculate score
+    # 7. Display total score.
+    # 8. Back to # 2
+    # VARIABLES NEEDED:
+    # 1. Something to hold return from load_words() - loaded_words
+    # 2. Something to check if hand has ended - hand_ended
+    # 2. Something to hold the entered word - input_word
+    # 3. Something to check for valid word - is_valid
+    # 4. Something to hold the total score - score
+    # 5. Something to check if the hand has ended - hand_ended
+
+    print "-"*35
+    print "Starting the Game!!"
+    loaded_words = load_words()
+    is_valid = False  # to check for valid word
+    is_period = False  # to check for '.'
+    hand_not_ended = False  # to check if hand ended
+    total_score = 0  # counter for score
+
+    while not hand_not_ended and not is_period: # Runs till hand is empty or '.' is entered
+        print "Current hand is: ", display_hand(hand)
+        # Check if hand has ended i.e. hand is empty
+        hand_to_dict = get_frequency_dict(hand)
+        for key in hand_to_dict.keys():
+            if hand_to_dict[key] != 0:
+                hand_not_ended = True
+                break
+
+        while not is_valid and not is_period: # Keeps executing until a valid word or '.' is entered
+            input_word = raw_input("Enter a word. Enter '.' to quit: ")
+            if input_word == '.':
+                is_period = True
+                print "Total Score: %d" % total_score
+                break
+            else:
+                is_valid = is_valid_word(input_word,hand,loaded_words)
+                if is_valid:  # If word is valid then calculate score and update hand
+                    word_score = get_word_score(input_word, HAND_SIZE)
+                    total_score += word_score
+                    print "Word Score: %d, Total Score: %d " % (word_score, total_score)
+                    print "Updated hand: ", update_hand(hand,input_word)
+                    is_valid = False  # reset is_valid to go through loop again for nex play
+
+
+
+
+
 
 #
 # Problem #5: Playing a game
