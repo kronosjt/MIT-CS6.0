@@ -258,26 +258,24 @@ def play_hand(hand, word_list):
     is_period = False  # to check for '.'
     hand_ended = False  # to check if hand ended
     total_score = 0  # counter for score
+    hand_current = hand  # just copying input hand to this for later use in the code
 
-    while not hand_ended and not is_period: # Runs till hand is empty or '.' is entered
-        print "Current hand is: ", display_hand(hand)
-
-        while not is_valid and not is_period and not hand_ended: # Keeps executing until a valid word or '.' is entered
-            input_word = raw_input("Enter word, or a . to indicate that you are finished:")
-            if input_word == '.':
-                is_period = True
-                hand_ended = True
-                break
-            else:
-                is_valid = is_valid_word(input_word,hand,word_list)
-                if is_valid:  # If word is valid then calculate score and update hand
-                    word_score = get_word_score(input_word, HAND_SIZE)
-                    total_score += word_score
-                    print "%s earned %d points. Total: %d " % (input_word, word_score, total_score)
-                    hand_updated = update_hand(hand,input_word)  # Update the hand
-                    print "Updated hand: ", hand_updated
-                    hand_ended = empty_dict(hand_updated)  # check if hand has ended i.e. all letters are used up
-                    is_valid = False  # reset is_valid to go through loop again for nex play
+    while not is_valid and not is_period and not hand_ended: # Execute until a valid word or '.' is entered or hand ends
+        print "Current hand is: ", display_hand(hand_current)
+        input_word = raw_input("Enter word, or a . to indicate that you are finished:")
+        if input_word == '.':
+            is_period = True
+            hand_ended = True
+            break
+        else:
+            is_valid = is_valid_word(input_word,hand,word_list)
+            if is_valid:  # If word is valid then calculate score and update hand
+                word_score = get_word_score(input_word, HAND_SIZE)
+                total_score += word_score
+                print "\"%s\" earned %d points. Total: %d " % (input_word, word_score, total_score)
+                hand_current = update_hand(hand_current,input_word)  # Update the hand
+                hand_ended = empty_dict(hand_current)  # check if hand has ended i.e. all letters are used up
+                is_valid = False  # reset is_valid to go through loop again for nex play
 
     print "Total Score: %d" % total_score
 
@@ -288,7 +286,6 @@ def empty_dict(input_dict):
     :param input_dict:
     :return: True or False
     """
-    print "inside emptydict func"
     for key in input_dict.keys():
         if input_dict.get(key) != 0:
             return False
@@ -315,27 +312,22 @@ def play_game(word_list):
 
     * If the user inputs anything else, ask them again.
     """
-    # TO DO ...
-    #print "play_game not implemented."         # delete this once you've completed Problem #4
-    #play_hand(deal_hand(HAND_SIZE), word_list) # delete this once you've completed Problem #4
 
-    play_hand({'h': 1, 'e': 1, 'l': 2, 'n': 1, 'o': 2}, word_list)  # debug
-    
-    ## uncomment the following block of code once you've completed Problem #4
-#    hand = deal_hand(HAND_SIZE) # random init
-#    while True:
-#        cmd = raw_input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
-#        if cmd == 'n':
-#            hand = deal_hand(HAND_SIZE)
-#            play_hand(hand.copy(), word_list)
-#            print
-#        elif cmd == 'r':
-#            play_hand(hand.copy(), word_list)
-#            print
-#        elif cmd == 'e':
-#            break
-#        else:
-#            print "Invalid command."
+    hand = deal_hand(HAND_SIZE) # random init
+    while True:
+        cmd = raw_input('Enter n to deal a new hand, r to replay the last hand, or e to end game: ')
+        if cmd == 'n':
+           hand = deal_hand(HAND_SIZE)
+           # play_hand(hand.copy(), word_list)
+           play_hand(hand, word_list)
+           print
+        elif cmd == 'r':
+           play_hand(hand.copy(), word_list) # use a shallow copy of hand
+           print
+        elif cmd == 'e':
+           break
+        else:
+           print "Invalid command."
 
 #
 # Build data structures used for entire session and play game
