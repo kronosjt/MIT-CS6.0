@@ -16,10 +16,11 @@ Longest substring in alphabetical order is: abc
 #   - index l should be greater than index (l-1) for them to be in alphabetical order
 
 A = "abcdefghijklmnopqrstuvwxyz"
-s = 'habke'
+s = 'azcbobobegghakl'
+indexInS = list([]) # list to store index of letter in s
 indexInA = list([]) # list to store the corresponding index in a
-indexInS = list([])
-for i in range(len(s)):
+
+for i in range(len(s)): # we need to find the index in a for each letter in s
     for j in range(len(A)):
         if s[i] == A[j]:
             indexInA += [j,]
@@ -27,7 +28,7 @@ for i in range(len(s)):
 
 print indexInA, indexInS
 
-matchA = []
+letInOrder = [] # list to store indices for letters that are in order
 answer = ''
 
 # for k in range(0,len(indexInA)):
@@ -44,24 +45,27 @@ answer = ''
 #             else:
 #                 match += [indexInA[k],]
 
+
 for k in range(0,len(indexInA)-1):
+    if len(letInOrder) >= len(indexInA[k:]):
+        break
     print "indexinA is %d value is %s" % (k, indexInA[k])
-    print "matchA is ", matchA
-    if len(matchA) == 0:
-        matchA += [indexInA[k],]
+    print "letInOrder is ", letInOrder
+    if len(letInOrder) == 0: # Initialize matchA
+        letInOrder += [indexInA[k],]
         answer += s[k]
-        print "match set to ", matchA
+        print "letInOrder set to ", letInOrder
     else:
-        if matchA[-1] > indexInA[k]:
-            matchA = list([])
+        if letInOrder[-1] > indexInA[k]:
+            letInOrder = list([])
             answer = ''
-            matchA += [indexInA[k], ]
+            letInOrder += [indexInA[k], ]
             answer += s[k]
         else:
-            matchA += [indexInA[k],]
+            letInOrder += [indexInA[k],]
             answer += s[k]
 
-print matchA
+print letInOrder
 
 print "Longest substring in alphabetical order is: ", answer
 
