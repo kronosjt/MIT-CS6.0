@@ -30,6 +30,7 @@ for i in range(1, len(s)):
             answer += s[i]
     else:
         break
+
 print "Longest substring in alphabetical order is: ", answer
 
 
