@@ -15,58 +15,21 @@ Longest substring in alphabetical order is: abc
 #   - For each letter in s we check the index in alphabets.
 #   - index l should be greater than index (l-1) for them to be in alphabetical order
 
-A = "abcdefghijklmnopqrstuvwxyz"
-s = 'azcbobobegghakl'
-indexInS = list([]) # list to store index of letter in s
-indexInA = list([]) # list to store the corresponding index in a
+s = 'abcbcd'
+answer = s[0]
 
-for i in range(len(s)): # we need to find the index in a for each letter in s
-    for j in range(len(A)):
-        if s[i] == A[j]:
-            indexInA += [j,]
-            indexInS += [i,]
-
-print indexInA, indexInS
-
-letInOrder = [] # list to store indices for letters that are in order
-answer = ''
-
-# for k in range(0,len(indexInA)):
-#     print "indexinA is %d value is %s" % (k, indexInA[k])
-#     print "match is ", match
-#     if len(match) == 0:
-#         match += [indexInA[k],]
-#         print "match set to ", match
-#     else:
-#         if k != len(indexInA)-1:
-#             if match[-1] > indexInA[k]:
-#                 match = list([])
-#                 match += [indexInA[k], ]
-#             else:
-#                 match += [indexInA[k],]
-
-
-for k in range(0,len(indexInA)-1):
-    if len(letInOrder) >= len(indexInA[k:]):
-        break
-    print "indexinA is %d value is %s" % (k, indexInA[k])
-    print "letInOrder is ", letInOrder
-    if len(letInOrder) == 0: # Initialize matchA
-        letInOrder += [indexInA[k],]
-        answer += s[k]
-        print "letInOrder set to ", letInOrder
-    else:
-        if letInOrder[-1] > indexInA[k]:
-            letInOrder = list([])
+for i in range(1, len(s)):
+    if len(answer) < len(s[i:]):
+        if answer[-1] > s[i]:
             answer = ''
-            letInOrder += [indexInA[k], ]
-            answer += s[k]
+            answer += s[i]
         else:
-            letInOrder += [indexInA[k],]
-            answer += s[k]
-
-print letInOrder
-
+            answer += s[i]
+    elif len(answer) == len(s[i:]):
+        if answer[-1] < s[i]:
+            answer += s[i]
+    else:
+        break
 print "Longest substring in alphabetical order is: ", answer
 
 
