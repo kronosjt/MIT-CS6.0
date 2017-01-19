@@ -15,23 +15,29 @@ Longest substring in alphabetical order is: abc
 #   - For each letter in s we check the index in alphabets.
 #   - index l should be greater than index (l-1) for them to be in alphabetical order
 
-s = 'abcbcd'
-answer = s[0]
+s = 'abcdakakaka'
+ans = s[0] # Initialize ans
+tempans = ''
 
 for i in range(1, len(s)):
-    if len(answer) < len(s[i:]):
-        if answer[-1] > s[i]:
-            answer = ''
-            answer += s[i]
+        if ans[-1] <= s[i]: # check last element of ans vs next element of s
+            ans += s[i] # add element of s to ans if it is bigger
         else:
-            answer += s[i]
-    elif len(answer) == len(s[i:]):
-        if answer[-1] < s[i]:
-            answer += s[i]
-    else:
-        break
+            if len(ans) >= len(s[i:]):
+                break # ans is longer than remaining elements in s so quit
+            else:
+                if len(tempans) < len(ans):
+                    tempans = ans # update tempans only if it is shorter than ans
+                    ans = ''
+                    ans += s[i]
+                else: # otherwise clear ans and continue
+                    ans = ''
+                    ans += s[i]
 
-print "Longest substring in alphabetical order is: ", answer
+if len(tempans) >= len(ans):
+    ans = tempans
+
+print ("Longest substring in alphabetical order is: ", ans)
 
 
 
